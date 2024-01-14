@@ -7,13 +7,22 @@ class EmberPlayer extends SpriteAnimationComponent
     with HasGameRef<UghGame>, KeyboardHandler {
 
   int horizontalDirection = 0;
+  int verticalDirection = 0;
   //Newton v=a*t
   //Newton d=v*t
   final Vector2 velocity = Vector2.zero();
   final double accelerate = 200;
+  final Set<LogicalKeyboardKey> magiaSubZero = {LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.keyA};
+  final Set<LogicalKeyboardKey> magiaScorpio = {LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.keyK};
+
+  static const int I_PLAYER_SUBZERO = 0;
+  static const int I_PLAYER_SCORPIO = 1;
+  static const int I_PLAYER_TANYA = 2;
+
+  late int iTipo = -1;
 
   EmberPlayer({
-    required super.position,
+    required super.position, required this.iTipo,
   }) : super(size: Vector2(100,160), anchor: Anchor.center);
 
   @override
@@ -35,17 +44,22 @@ class EmberPlayer extends SpriteAnimationComponent
     print("Tecla presionada" + event.data.toString());
 
     horizontalDirection = 0;
-    if(keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
-      position.y-= 20;
+    verticalDirection = 0;
+
+    if(keysPressed.containsAll(magiaScorpio) && iTipo == I_PLAYER_SCORPIO){
+
     }
-    if(keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
-      position.y+= 20;
+    else if(keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
+      verticalDirection = -1;
+    }
+    else if(keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
+      verticalDirection = 1;
     }
 
-    if(keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
+    else if(keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
       horizontalDirection = 1;
       }
-    if(keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
+    else if(keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
       horizontalDirection = -1;
     }
 
@@ -55,8 +69,8 @@ class EmberPlayer extends SpriteAnimationComponent
   @override
   void update(double dt) {
     // TODO: implement update
-    print(horizontalDirection);
     velocity.x = horizontalDirection * accelerate; //v=a*t
+    velocity.y = verticalDirection * accelerate; //v=a*t
     position += velocity * dt; //d=v*t
     super.update(dt);
   }

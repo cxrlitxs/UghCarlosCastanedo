@@ -56,7 +56,7 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents{
     }
 
     _player = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 150),
+      position: Vector2(128, canvasSize.y - 150,), iTipo: EmberPlayer.I_PLAYER_TANYA,
     );
     world.add(_player);
   }
