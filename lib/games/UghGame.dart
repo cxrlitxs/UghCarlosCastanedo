@@ -3,13 +3,14 @@ import 'dart:ui';
 
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:ugh/elementos/Gota.dart';
 import '../players/EmberPlayer.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import '../elementos/Estrella.dart';
 
-class UghGame extends FlameGame{
+class UghGame extends FlameGame with HasKeyboardHandlerComponents{
 
   final world = World();
   late final CameraComponent cameraComponent;
