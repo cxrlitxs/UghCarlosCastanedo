@@ -6,6 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import '../players/EmberPlayer.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import '../elementos/Estrella.dart';
 
 class UghGame extends FlameGame{
 
@@ -35,6 +36,13 @@ class UghGame extends FlameGame{
 
     mapComponent=await TiledComponent.load('mapa1.tmx', Vector2.all(32));
     world.add(mapComponent);
+
+    ObjectGroup? estrellas=mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
+
+    for(final estrella in estrellas!.objects){
+      Estrella spriteStar = Estrella(position: Vector2(estrella.x,estrella.y));
+      add(spriteStar);
+    }
 
     _player = EmberPlayer(
       position: Vector2(128, canvasSize.y - 150),
