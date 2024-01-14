@@ -10,7 +10,7 @@ import '../players/EmberPlayer.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import '../elementos/Estrella.dart';
 
-class UghGame extends FlameGame with HasKeyboardHandlerComponents{
+class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionDetection{
 
   final world = World();
   late final CameraComponent cameraComponent;

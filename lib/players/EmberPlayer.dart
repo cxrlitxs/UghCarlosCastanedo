@@ -1,10 +1,14 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ugh/elementos/Estrella.dart';
+import 'package:ugh/elementos/Gota.dart';
 import 'package:ugh/games/UghGame.dart';
 
 class EmberPlayer extends SpriteAnimationComponent
-    with HasGameRef<UghGame>, KeyboardHandler {
+    with HasGameRef<UghGame>, KeyboardHandler, CollisionCallbacks {
 
   int horizontalDirection = 0;
   int verticalDirection = 0;
@@ -21,6 +25,9 @@ class EmberPlayer extends SpriteAnimationComponent
 
   late int iTipo = -1;
 
+  final _defaultColor = Colors.red;
+  late ShapeHitbox hitbox;
+
   EmberPlayer({
     required super.position, required this.iTipo,
   }) : super(size: Vector2(100,160), anchor: Anchor.center);
@@ -36,6 +43,17 @@ class EmberPlayer extends SpriteAnimationComponent
         stepTime: 0.12,
       ),
     );
+
+    final defaultPaint = Paint()
+      ..color = _defaultColor
+      ..style = PaintingStyle.stroke;
+
+    hitbox = RectangleHitbox()
+      ..paint = defaultPaint
+      ..isSolid = true
+      ..renderShape = true;
+    add(hitbox);
+
   }
 
   @override
@@ -64,6 +82,17 @@ class EmberPlayer extends SpriteAnimationComponent
     }
 
     return true;
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    // TODO: implement onCollision
+    if(other is Gota){
+      this.removeFromParent();
+    } else if (other is Estrella){
+      other.removeFromParent();
+    }
+    super.onCollision(intersectionPoints, other);
   }
 
   @override
