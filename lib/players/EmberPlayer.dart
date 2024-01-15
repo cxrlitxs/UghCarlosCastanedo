@@ -16,12 +16,9 @@ class EmberPlayer extends SpriteAnimationComponent
   //Newton d=v*t
   final Vector2 velocity = Vector2.zero();
   final double accelerate = 200;
-  final Set<LogicalKeyboardKey> magiaSubZero = {LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.keyA};
-  final Set<LogicalKeyboardKey> magiaScorpio = {LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.keyK};
 
   static const int I_PLAYER_SUBZERO = 0;
   static const int I_PLAYER_SCORPIO = 1;
-  static const int I_PLAYER_TANYA = 2;
 
   late int iTipo = -1;
 
@@ -64,21 +61,36 @@ class EmberPlayer extends SpriteAnimationComponent
     horizontalDirection = 0;
     verticalDirection = 0;
 
-    if(keysPressed.containsAll(magiaScorpio) && iTipo == I_PLAYER_SCORPIO){
-
-    }
-    else if(keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
-      verticalDirection = -1;
-    }
-    else if(keysPressed.contains(LogicalKeyboardKey.arrowDown)) {
-      verticalDirection = 1;
-    }
-
-    else if(keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-      horizontalDirection = 1;
+    if(iTipo == I_PLAYER_SUBZERO){
+      if(keysPressed.contains(LogicalKeyboardKey.keyW)) {
+        verticalDirection = -1;
       }
-    else if(keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      horizontalDirection = -1;
+      else if(keysPressed.contains(LogicalKeyboardKey.keyX)) {
+        verticalDirection = 1;
+      }
+
+      else if(keysPressed.contains(LogicalKeyboardKey.keyD)) {
+        horizontalDirection = 1;
+      }
+      else if(keysPressed.contains(LogicalKeyboardKey.keyA)) {
+        horizontalDirection = -1;
+      }
+    }
+
+    if(iTipo == I_PLAYER_SCORPIO){
+      if(keysPressed.contains(LogicalKeyboardKey.numpad8)) {
+        verticalDirection = -1;
+      }
+      else if(keysPressed.contains(LogicalKeyboardKey.numpad2)) {
+        verticalDirection = 1;
+      }
+
+      else if(keysPressed.contains(LogicalKeyboardKey.numpad6)) {
+        horizontalDirection = 1;
+      }
+      else if(keysPressed.contains(LogicalKeyboardKey.numpad4)) {
+        horizontalDirection = -1;
+      }
     }
 
     return true;

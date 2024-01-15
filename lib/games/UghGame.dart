@@ -14,7 +14,7 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionD
 
   final world = World();
   late final CameraComponent cameraComponent;
-  late EmberPlayer _player;
+  late EmberPlayer _player,_player2;
   late TiledComponent mapComponent;
 
   @override
@@ -56,9 +56,14 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionD
     }
 
     _player = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 150,), iTipo: EmberPlayer.I_PLAYER_TANYA,
+      position: Vector2(128, canvasSize.y - 150,), iTipo: EmberPlayer.I_PLAYER_SUBZERO,
     );
     world.add(_player);
+
+    _player2 = EmberPlayer(
+      position: Vector2(128, canvasSize.y - 100,), iTipo: EmberPlayer.I_PLAYER_SCORPIO,
+    );
+    world.add(_player2);
   }
 
   @override
