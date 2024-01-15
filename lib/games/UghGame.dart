@@ -25,7 +25,7 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionD
       'heart.png',
       'star.png',
       'water_enemy.png',
-      'reading.png',
+      'ember.png',
       'tilemap1_32.png'
     ]);
 
