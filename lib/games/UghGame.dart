@@ -1,20 +1,18 @@
-import 'dart:async';
 import 'dart:ui';
-
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:ugh/elementos/Gota.dart';
-import '../players/EmberPlayer.dart';
+import '../bodies/EmberBody.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import '../elementos/Estrella.dart';
 
-class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionDetection{
+class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisionDetection{
 
-  final world = World();
   late final CameraComponent cameraComponent;
-  late EmberPlayer _player,_player2;
+  late EmberPlayerBody _player, _player2;
   late TiledComponent mapComponent;
 
   @override
@@ -30,9 +28,6 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionD
     ]);
 
     cameraComponent = CameraComponent(world: world);
-    // Everything in this tutorial assumes that the position
-    // of the `CameraComponent`s viewfinder (where the camera is looking)
-    // is in the top left corner, that's why we set the anchor here.
     cameraComponent.viewfinder.anchor = Anchor.topLeft;
     addAll([cameraComponent, world]);
 
@@ -55,15 +50,15 @@ class UghGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionD
       add(spriteGota);
     }
 
-    _player = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 150,), iTipo: EmberPlayer.I_PLAYER_SUBZERO,
+    _player = EmberPlayerBody(initialPosition: Vector2(128, canvasSize.y - 350,),
+        iTipo: EmberPlayerBody.I_PLAYER_SUBZERO,tamano: Vector2.all(64)
     );
-    world.add(_player);
+    add(_player);
 
-    _player2 = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 100,), iTipo: EmberPlayer.I_PLAYER_SCORPIO,
+    _player2 = EmberPlayerBody(initialPosition: Vector2(140, canvasSize.y - 350,),
+        iTipo: EmberPlayerBody.I_PLAYER_SCORPIO,tamano: Vector2.all(64)
     );
-    world.add(_player2);
+    add(_player2);
   }
 
   @override
