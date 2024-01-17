@@ -7,6 +7,7 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:ugh/elementos/Gota.dart';
 import '../bodies/EmberBody.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import '../bodies/TierraBody.dart';
 import '../config/config.dart';
 import '../elementos/Estrella.dart';
 
@@ -54,6 +55,15 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
       Gota spriteGota = Gota(position: Vector2(gota.x*wScale,gota.y*wScale),
           size: Vector2(64*wScale, 64*hScale));
       add(spriteGota);
+    }
+
+    ObjectGroup? tierras=mapComponent.tileMap.getLayer<ObjectGroup>("tierra");
+
+    for(final tiledObjectTierra in tierras!.objects){
+      TierraBody tierraBody = TierraBody(tiledBody: tiledObjectTierra,
+          scales: Vector2(wScale,hScale));
+      //tierraBody.onBeginContact=InicioContactosDelJuego;
+      add(tierraBody);
     }
 
     _player = EmberPlayerBody(initialPosition: Vector2(128, canvasSize.y - 350,),
