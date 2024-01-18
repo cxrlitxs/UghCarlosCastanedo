@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:ugh/bodies/EstrellaBody.dart';
 import 'package:ugh/elementos/Gota.dart';
 import '../bodies/EmberBody.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -45,10 +46,11 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     ObjectGroup? estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
 
     for(final estrella in estrellas!.objects){
-      Estrella spriteStar = Estrella(position: Vector2(estrella.x*wScale,estrella.y*wScale),
-      size: Vector2(64*wScale, 64*hScale));
-      add(spriteStar);
+      EstrellaBody estrellaBody = EstrellaBody(posXY: Vector2(estrella.x*wScale,estrella.y*wScale),
+          tamWH: Vector2(64*wScale,64*hScale));
+      add(estrellaBody);
     }
+
 
     ObjectGroup? gotas = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
 

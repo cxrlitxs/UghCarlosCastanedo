@@ -8,7 +8,6 @@ class Estrella extends SpriteComponent with HasGameRef<UghGame>, CollisionCallba
 
   Estrella({required super.position, required super.size});
 
-  final _defaultColor = Colors.red;
   late ShapeHitbox hitbox;
 
   @override
@@ -16,16 +15,6 @@ class Estrella extends SpriteComponent with HasGameRef<UghGame>, CollisionCallba
     // TODO: implement onLoad
     sprite = Sprite(game.images.fromCache('star.png'));
     anchor = Anchor.center;
-
-    final defaultPaint = Paint()
-      ..color = _defaultColor
-      ..style = PaintingStyle.stroke;
-
-    hitbox = RectangleHitbox()
-      ..paint = defaultPaint
-      ..isSolid = true
-      ..renderShape = true;
-    add(hitbox);
     return super.onLoad();
   }
 }
