@@ -5,13 +5,11 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:ugh/bodies/EstrellaBody.dart';
-import 'package:ugh/elementos/Gota.dart';
 import '../bodies/EmberBody.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import '../bodies/GotaBody.dart';
 import '../bodies/TierraBody.dart';
 import '../config/config.dart';
-import '../elementos/Estrella.dart';
 
 class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisionDetection{
 
@@ -57,6 +55,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     for(final gota in gotas!.objects){
       GotaBody gotaBody = GotaBody(posXY: Vector2(gota.x*wScale,gota.y*wScale),
           tamWH: Vector2(64*wScale,64*hScale));
+      gotaBody.onBeginContact = InicioContactosDelJuego;
       add(gotaBody);
     }
 
@@ -72,11 +71,13 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     _player = EmberPlayerBody(initialPosition: Vector2(128, canvasSize.y - 350,),
         iTipo: EmberPlayerBody.I_PLAYER_SUBZERO,tamano: Vector2(64*wScale, 64*hScale)
     );
+    _player.onBeginContact = InicioContactosDelJuego;
     add(_player);
 
     _player2 = EmberPlayerBody(initialPosition: Vector2(140, canvasSize.y - 350,),
         iTipo: EmberPlayerBody.I_PLAYER_SCORPIO,tamano: Vector2(64*wScale, 64*hScale)
     );
+    _player2.onBeginContact = InicioContactosDelJuego;
     add(_player2);
   }
 
@@ -86,4 +87,23 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     return Color.fromRGBO(43, 6, 77, 1.0);
   }
 
+  void InicioContactosDelJuego(Object objeto,Contact contact){
+    if(objeto is EstrellaBody){
+      objeto.removeFromParent();
+    }
+
+    if(objeto == _player){
+      _player.iVidas--;
+      if(_player.iVidas<0){
+        _player.removeFromParent();
+      }
+    }
+
+    if(objeto == _player2){
+      _player2.iVidas--;
+      if(_player2.iVidas<0){
+        _player2.removeFromParent();
+      }
+    }
+  }
 }
