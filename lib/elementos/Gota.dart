@@ -9,7 +9,6 @@ class Gota extends SpriteAnimationComponent with HasGameRef<UghGame>, CollisionC
     required super.position, required super.size
   }) : super(anchor: Anchor.center);
 
-  final _defaultColor = Colors.red;
   late ShapeHitbox hitbox;
 
   @override
@@ -25,18 +24,6 @@ class Gota extends SpriteAnimationComponent with HasGameRef<UghGame>, CollisionC
         stepTime: 0.50,
       ),
     );
-
-
-    final defaultPaint = Paint()
-      ..color = _defaultColor
-      ..style = PaintingStyle.stroke;
-
-    hitbox = RectangleHitbox()
-      ..paint = defaultPaint
-      ..isSolid = true
-      ..renderShape = true;
-    add(hitbox);
-
 
     return super.onLoad();
   }
