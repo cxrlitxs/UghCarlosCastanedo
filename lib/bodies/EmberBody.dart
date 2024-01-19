@@ -9,7 +9,7 @@ import '../players/EmberPlayer.dart';
 
 class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallbacks{
   final Vector2 velocidad = Vector2.zero();
-  final double aceleracion = 200;
+  final double aceleracion = 600;
   late int iTipo=-1;
   late Vector2 tamano;
   int horizontalDirection = 0;
@@ -54,7 +54,7 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
     emberPlayer = EmberPlayer(position: Vector2(0,0),iTipo: iTipo, size:tamano);
     add(emberPlayer);
     await super.onLoad();
-    body.gravityOverride = Vector2(0, 50);
+    body.gravityOverride = Vector2(0, 100);
   }
 
   @override
@@ -75,14 +75,14 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
         if(keysPressed.contains(LogicalKeyboardKey.keyW)) {
           verticalDirection = -2;
         }
-        else if(keysPressed.contains(LogicalKeyboardKey.keyX)) {
+        if(keysPressed.contains(LogicalKeyboardKey.keyX)) {
           verticalDirection = 2;
         }
 
-        else if(keysPressed.contains(LogicalKeyboardKey.keyD)) {
+        if(keysPressed.contains(LogicalKeyboardKey.keyD)) {
           horizontalDirection = 2;
         }
-        else if(keysPressed.contains(LogicalKeyboardKey.keyA)) {
+        if(keysPressed.contains(LogicalKeyboardKey.keyA)) {
           horizontalDirection = -2;
         }
       }
@@ -91,14 +91,14 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
         if(keysPressed.contains(LogicalKeyboardKey.numpad8)) {
           verticalDirection = -2;
         }
-        else if(keysPressed.contains(LogicalKeyboardKey.numpad2)) {
+        if(keysPressed.contains(LogicalKeyboardKey.numpad2)) {
           verticalDirection = 2;
         }
 
-        else if(keysPressed.contains(LogicalKeyboardKey.numpad6)) {
+        if(keysPressed.contains(LogicalKeyboardKey.numpad6)) {
           horizontalDirection = 2;
         }
-        else if(keysPressed.contains(LogicalKeyboardKey.numpad4)) {
+        if(keysPressed.contains(LogicalKeyboardKey.numpad4)) {
           horizontalDirection = -2;
         }
       }
@@ -106,16 +106,16 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
       if(iTipo == I_PLAYER_SUBZERO){
         if(keysPressed.contains(LogicalKeyboardKey.keyS)){
             body.gravityOverride = (body.gravityOverride?.y ?? 0) > 1
-                ? Vector2(0, -50)
-                : Vector2(0, 50);
+                ? Vector2(0, -100)
+                : Vector2(0, 100);
         }
       }
 
       if(iTipo == I_PLAYER_SCORPIO){
         if(keysPressed.contains(LogicalKeyboardKey.numpad5)){
             body.gravityOverride = (body.gravityOverride?.y ?? 0) > 1
-                ? Vector2(0, -50)
-                : Vector2(0, 50);
+                ? Vector2(0, -100)
+                : Vector2(0, 100);
         }
       }
     }
