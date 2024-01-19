@@ -9,6 +9,7 @@ import '../bodies/EmberBody.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import '../bodies/GotaBody.dart';
 import '../bodies/TierraBody.dart';
+import '../componentes/Vidas.dart';
 import '../config/config.dart';
 
 class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisionDetection{
@@ -17,6 +18,8 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
   late EmberPlayerBody _player, _player2;
   late TiledComponent mapComponent;
   double wScale=1.0, hScale=1.0;
+  late Vidas vidasPlayer;
+  late Vidas vidasPlayer2;
 
   @override
   Future<void> onLoad() async {
@@ -79,6 +82,20 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     );
     _player2.onBeginContact = InicioContactosDelJuego;
     add(_player2);
+
+    final vidaSprite = await loadSprite('heart.png');
+    vidasPlayer = Vidas(vidaSprite: vidaSprite, texto: "Ember");
+    vidasPlayer.position = Vector2(
+      (size.x - 32) / 2,
+      30,);
+    add(vidasPlayer);
+
+    vidasPlayer2 = Vidas(vidaSprite: vidaSprite, texto: "Ember 2");
+    vidasPlayer2.position = Vector2(
+      (size.x - 32) / 2,
+      65 + 35, // 35 es el tamaño de la imagen de la vida
+    );
+    add(vidasPlayer2);
   }
 
   @override
@@ -93,17 +110,32 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     }
 
     if(objeto == _player){
-      _player.iVidas--;
-      if(_player.iVidas<0){
-        _player.removeFromParent();
-      }
+      perderVida(_player);
     }
 
     if(objeto == _player2){
-      _player2.iVidas--;
-      if(_player2.iVidas<0){
-        _player2.removeFromParent();
-      }
+      perderVida(_player2);
     }
   }
+
+  void perderVida(EmberPlayerBody jugador) {
+    jugador.iVidas--;
+    if (jugador.iVidas == 0) {
+      if (jugador == _player) {
+        vidasPlayer.numeroVidas = jugador.iVidas;
+      } else if (jugador == _player2) {
+        vidasPlayer2.numeroVidas = jugador.iVidas;
+      }
+      jugador.removeFromParent();
+    } else {
+        // Actualizar el componente de vidas del jugador correspondiente
+        if (jugador == _player) {
+          vidasPlayer.numeroVidas = jugador.iVidas;
+        } else if (jugador == _player2) {
+          vidasPlayer2.numeroVidas = jugador.iVidas;
+        }
+    }
+  }
+
+
 }
