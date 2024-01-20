@@ -19,6 +19,7 @@ class EmberPlayerBody extends BodyComponent with KeyboardHandler,ContactCallback
   late EmberPlayer emberPlayer;
   Vector2 initialPosition;
   int iVidas = 4;
+  bool partidaPerdida = false;
 
   EmberPlayerBody({required this.initialPosition,required this.iTipo,
     required this.tamano})

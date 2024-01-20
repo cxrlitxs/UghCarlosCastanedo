@@ -5,6 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ugh/bodies/EstrellaBody.dart';
 import '../bodies/EmberBody.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -122,6 +123,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
   }
 
   void perderVida(EmberPlayerBody jugador) {
+
     jugador.iVidas--;
     if (jugador.iVidas == 0) {
       if (jugador == _player) {
@@ -130,6 +132,18 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
         vidasPlayer2.numeroVidas = jugador.iVidas;
       }
       jugador.removeFromParent();
+      jugador.partidaPerdida = true;
+      if (_player.partidaPerdida && _player2.partidaPerdida){
+        final gameOverText = TextComponent(
+          text: 'GAME OVER',
+          textRenderer: TextPaint(style: TextStyle(fontSize: 100.0 * wScale, color: Colors.white)),
+        );
+        gameOverText.anchor = Anchor.center;
+        gameOverText.x = size.x / 2;
+        gameOverText.y = size.y / 2;
+
+        add(gameOverText);
+      }
     } else {
         // Actualizar el componente de vidas del jugador correspondiente
         if (jugador == _player) {
@@ -139,6 +153,4 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
         }
     }
   }
-
-
 }
