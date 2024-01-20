@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:ugh/bodies/EstrellaBody.dart';
 import '../bodies/EmberBody.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -42,7 +43,7 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
     addAll([cameraComponent, world]);
 
     mapComponent=await TiledComponent.load('mapa1.tmx', Vector2(32*wScale, 32*hScale));
-    world.add(mapComponent);
+    add(mapComponent);
 
     ObjectGroup? estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
 
@@ -71,30 +72,32 @@ class UghGame extends Forge2DGame with HasKeyboardHandlerComponents, HasCollisio
       add(tierraBody);
     }
 
-    _player = EmberPlayerBody(initialPosition: Vector2(128, canvasSize.y - 350,),
+    _player = EmberPlayerBody(initialPosition: Vector2(128*wScale, canvasSize.y - 350*hScale,),
         iTipo: EmberPlayerBody.I_PLAYER_SUBZERO,tamano: Vector2(64*wScale, 64*hScale)
     );
     _player.onBeginContact = InicioContactosDelJuego;
     add(_player);
 
-    _player2 = EmberPlayerBody(initialPosition: Vector2(140, canvasSize.y - 350,),
+    _player2 = EmberPlayerBody(initialPosition: Vector2(250*wScale, canvasSize.y - 350*hScale,),
         iTipo: EmberPlayerBody.I_PLAYER_SCORPIO,tamano: Vector2(64*wScale, 64*hScale)
     );
     _player2.onBeginContact = InicioContactosDelJuego;
     add(_player2);
 
     final vidaSprite = await loadSprite('heart.png');
-    vidasPlayer = Vidas(vidaSprite: vidaSprite, texto: "Ember");
+    vidasPlayer = Vidas(vidaSprite: vidaSprite, texto: "Ember 1");
     vidasPlayer.position = Vector2(
-      (size.x - 32) / 2,
-      30,);
+      ((gameWidth * wScale ) - 243.39453125) / 2, //243.39453125 es el tamaño del texto y los corazones
+      50 * hScale,);
+    vidasPlayer.scale = (Vector2(wScale, hScale));
     add(vidasPlayer);
 
     vidasPlayer2 = Vidas(vidaSprite: vidaSprite, texto: "Ember 2");
     vidasPlayer2.position = Vector2(
-      (size.x - 32) / 2,
-      65 + 35, // 35 es el tamaño de la imagen de la vida
+      ((gameWidth * wScale) - 243.39453125) / 2, //243.39453125 es el tamaño del texto y los corazones
+      100 * hScale,
     );
+    vidasPlayer2.scale = (Vector2(wScale, hScale));
     add(vidasPlayer2);
   }
 
